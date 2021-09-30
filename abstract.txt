@@ -1,0 +1,70 @@
+package com.company;
+
+abstract class Car
+{
+    abstract void start();
+    abstract void stop();
+    abstract void accelerate();
+
+}
+   class BMW extends Car
+{
+    public void start()
+    {
+        System.out.println("BMW Started");
+    }
+    void stop()
+    {
+        System.out.println("BMW Stopped");
+    }
+    void accelerate()
+    {
+        System.out.println("Accelerate BMW");
+    }
+    void design()
+    {
+        System.out.println("---Design Specification---");
+        System.out.println("Air_Baloon-Accident prone");
+        System.out.println("Spacious");
+    }
+}
+class Swift extends Car
+{
+    public void start()
+    {
+        System.out.println("Swift Started");
+    }
+    void stop()
+    {
+        System.out.println("Swift Stopped");
+    }
+    void accelerate()
+    {
+        System.out.println("Accelerate Swift");
+    }
+    void Model()
+    {
+        System.out.println("----Model----");
+        System.out.println("Latest version");
+        System.out.println("Highly Automated");
+    }
+}
+public class Main
+{
+    public static void main(String args[])
+    {
+        Car obj=new BMW();
+        Car obj1=new Swift();
+        BMW obj2=new BMW();
+        Swift obj3=new Swift();
+        obj.start();
+        obj.stop();
+        obj.accelerate();
+        obj2.design();
+        obj1.start();
+        obj1.stop();
+        obj1.accelerate();
+        obj3.Model();
+
+    }
+}
