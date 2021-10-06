@@ -1,0 +1,28 @@
+import org.junit.jupiter.api.*;
+
+public class Check {
+        Bank obj = new Bank();
+
+        @BeforeEach
+                @Test
+                void name()
+                {
+                        obj.setName("kaviya");
+                        Assertions.assertFalse(obj.getName().isEmpty());
+                 }
+        @BeforeEach
+       @Test
+        void Cardno() {
+                        obj.setCardno("23455");
+                      Assertions.assertFalse(obj.getCardno().isEmpty());
+
+                      }
+        @BeforeEach
+       @Test
+        void Cvc() {
+                obj.setCvc("656");
+                Assertions.assertFalse(obj.getCvc().isEmpty());
+        }
+
+}
+
