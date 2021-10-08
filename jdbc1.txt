@@ -1,0 +1,115 @@
+import jdk.jshell.StatementSnippet;
+
+import java.sql.*;
+import java.util.Scanner;
+
+
+public class Demojava {
+    private static Connection con;
+    private static Statement stm;
+
+    private static ResultSet rs;
+    Scanner sc = new Scanner(System.in);
+
+    public static void insert() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter usn number");
+        String sid = sc.next();
+        System.out.println("Enter name");
+        String sname = sc.next();
+        System.out.println("Enter branch");
+        String sbranch = sc.next();
+        System.out.println("Enter age");
+        int sage = sc.nextInt();
+        System.out.println("Enter place");
+        String splace = sc.next();
+        String sql = "insert into student_info values(?,?,?,?,?)";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, sid);
+        pstm.setString(2, sname);
+        pstm.setString(3, sbranch);
+        pstm.setInt(4, sage);
+        pstm.setString(5, splace);
+        int status = pstm.executeUpdate();
+
+        if (status == 0) {
+            System.out.println("Not updated ");
+        } else {
+            System.out.println("Insertion done");
+        }
+
+    }
+
+    public static void display() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter usn");
+        String sid = sc.next();
+        String sql1 = "select * from student_info where sid="+sid+"";
+        rs= stm.executeQuery(sql1);
+        while (rs.next()) {;
+            System.out.println("sid :" + rs.getString(1) + " " + "sname:" + rs.getString(2) + " " + "sbranch:" + rs.getString(3) + "sage:" + rs.getInt(4) + " " + "splace:" + rs.getString(5));
+        }
+    }
+
+    public static void delete() throws SQLException {
+       // stm = con.createStatement();
+        System.out.println("Enter usn");
+        Scanner sc = new Scanner(System.in);
+        String sid = sc.next();
+        String sql = "delete from student_info where sid="+sid+"";
+        stm.executeUpdate(sql);
+        System.out.println("deleted sucessfully");
+    }
+
+    public static void exit() {
+        System.exit(0);
+    }
+
+    public static void main(String[] args) throws SQLException {
+
+
+        Scanner sc = new Scanner(System.in);
+        try {
+            String addr = "jdbc:mysql://localhost:3306/University";
+            String username = "root";
+            String password = "root";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con=DriverManager.getConnection(addr, username, password);
+            System.out.println("Connection Established");
+            stm=con.createStatement();
+
+            while (true) {
+                System.out.println("Enter option\n1.Insert\n2.Display\n3.Delete\n4.Exit");
+                int option = sc.nextInt();
+                switch (option) {
+                    case 1:
+                        insert();
+                        break;
+                    case 2:
+                        display();
+                        break;
+                    case 3:
+                        delete();
+                        break;
+                    case 4:
+                        exit();
+                        break;
+                    default:
+                        System.out.println("Enter valid option");
+                }
+
+            }
+
+        } catch (ClassNotFoundException E) {
+
+        } catch (SQLException e) {
+
+        }
+
+    }
+}
+
+
+
+
+
