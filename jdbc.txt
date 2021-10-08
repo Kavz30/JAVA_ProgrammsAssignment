@@ -1,0 +1,113 @@
+import java.sql.*;
+import java.util.Scanner;
+
+
+public class Demojava {
+    Connection con=null;
+    Statement stm=null;
+    ResultSet rs = null;
+    Scanner sc=new Scanner(System.in);
+    public void insert() throws SQLException {
+        System.out.println("Enter usn number");
+        String sid = sc.next();
+        System.out.println("Enter name");
+        String sname = sc.next();
+        System.out.println("Enter branch");
+        String sbranch = sc.next();
+        System.out.println("Enter age");
+        int sage = sc.nextInt();
+        System.out.println("Enter place");
+        String splace = sc.next();
+        stm= con.createStatement();
+        String sql = "insert into student_info values(?,?,?,?,?)";
+        System.out.println("hello");
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, sid);
+        pstm.setString(2, sname);
+        pstm.setString(3, sbranch);
+        pstm.setInt(4, sage);
+        pstm.setString(5, splace);
+        int status = pstm.executeUpdate();
+
+        if (status == 0) {
+            System.out.println("Not updated ");
+        } else {
+            System.out.println("Insertion done");
+        }
+
+    }
+    public void display() throws SQLException {
+        System.out.println("Enter usn");
+        String sid=sc.next();
+        String sql="select * from student_info where sid=?";
+        PreparedStatement pstm= con.prepareStatement(sql);
+        pstm.setString(1,sid);
+        pstm.executeQuery();
+    }
+    public void delete() throws SQLException {
+        System.out.println("Enter usn");
+        String sid=sc.next();
+        String sql="delete from student_info where sid=?";
+        PreparedStatement pstm=con.prepareStatement(sql);
+        pstm.setString(1,sid);
+        pstm.executeQuery();
+    }
+    public void exit()
+    {
+        System.exit(0);
+    }
+
+
+
+
+
+
+
+    public static void main(String[] args) {
+        Connection con;
+        Statement stm;
+        Scanner sc=new Scanner(System.in);
+        try {
+            String addr = "jdbc:mysql://localhost:3306/University";
+            String username = "root";
+            String password = "root";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connection Established");
+            Demojava obj=new Demojava();
+            System.out.println("Enter option\n1.Insert\n2.Display\n3.Delete\n4.Exit");
+            int option=sc.nextInt();
+            while(true) {
+                switch (option) {
+                    case 1:
+                        obj.insert();
+                        break;
+                    case 2:
+                        obj.display();
+                        break;
+                    case 3:
+                        obj.delete();
+                        break;
+                    case 4:
+                        obj.exit();
+                        break;
+                    default:
+                        System.out.println("Enter valid option");
+                }
+            }
+
+
+
+        } catch (ClassNotFoundException E) {
+
+        }
+            catch (SQLException e) {
+
+        }
+
+    }
+}
+
+
+
+
