@@ -1,0 +1,68 @@
+import org.junit.jupiter.api.*;
+
+class ContactManagerTest {
+    private static ContactManager contactManager;
+    @BeforeAll
+    public static void setUpALL()
+    {
+        System.out.println("Before all execute");
+    }
+  @BeforeEach
+  public void setUp()
+  {
+      System.out.println("Instantiate object");
+      contactManager=new ContactManager();
+  }
+
+    @Test
+    @DisplayName("Contact Created")
+    public void shouldCreateContact(){
+
+   contactManager.addcontact("kaviya","selva","0809873262");
+   Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
+   Assertions.assertEquals(1,contactManager.getAllContacts().size());
+
+    }
+
+
+
+    @Test
+    @DisplayName("Should throw error when First name is null")
+    public void throwErrorWhenFirstNameIsNull()
+    {
+
+        Assertions.assertThrows(RuntimeException.class, ()->{
+            contactManager.addcontact(null,"raju","0123453466");
+    });
+    }
+
+    @Test
+    @DisplayName("Should throw error when last name is null")
+    public void throwErrorWhenLastNameIsNull()
+    {
+
+        Assertions.assertThrows(RuntimeException.class, ()->{
+            contactManager.addcontact("priya",null,"0123453466");
+        });
+    }
+
+    @Test
+    @DisplayName("Should throw error when phone no is null")
+    public void throwErrorWhenPhoneNoIsNull()
+    {
+
+        Assertions.assertThrows(RuntimeException.class, ()->{
+            contactManager.addcontact("priya","raju",null);
+        });
+    }
+    @AfterEach
+    public void aftereach()
+    {
+        System.out.println("After each method");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("Executing all test cases");
+    }
+}
