@@ -1,0 +1,40 @@
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+public class ContactManager{
+    Map<String,Contact> contactList = new ConcurrentHashMap<String,Contact>();
+    public void addcontact(String first_name,String last_name,String phone_no)
+    {
+        Contact contact=new Contact(first_name,last_name,phone_no);
+        validatecontact(contact);
+        checkIfContactAlreadyExit(contact);
+        contactList.put(generatekey(contact),contact);
+
+    }
+    public Collection<Contact> getAllContacts()
+    {
+        return contactList.values() ;
+    }
+
+    private String generatekey(Contact contact) {
+        return String.format("%s-%s",contact.getFirst_name(),contact.getLast_name());
+    }
+
+
+    private void checkIfContactAlreadyExit(Contact contact) {
+        if(contactList.containsKey(generatekey(contact))){
+            throw new RuntimeException("Contact already exits");
+        }
+    }
+    private void validatecontact(Contact contact) {
+        contact.validateFirst_name();
+        contact.validateLast_name();
+        contact.validatePhoneno();
+    }
+
+
+}
